@@ -34,5 +34,26 @@ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies
 cat /sys/devices/gpu.0/devfreq/57000000.gpu/available_frequencies
 ```
 
+## Benchmark
+
+`bench.sh` pins CPU/GPU clocks to stock and then to OC levels on the same boot, alternating rounds. It runs stress-ng (matrixprod, 1 and 4 threads), 7-Zip and CUDA nbody, and logs temperatures and `POM_5V_IN` power from tegrastats. The OC dtb must be active.
+
+```sh
+sudo apt install stress-ng p7zip-full   # if missing
+sudo ./bench.sh [rounds]                # default 2, writes bench-<timestamp>.log
+```
+
+Expected gains:
+
+| | stock | OC | gain |
+|---|---|---|---|
+| stress-ng 1 thread (bogo ops/s) | 3.23 | 3.39 | +5.0% |
+| stress-ng 4 threads (bogo ops/s) | 12.76 | 13.43 | +5.3% |
+| 7-Zip (MIPS) | 5195 | 5401 | +4.0% |
+| nbody 32768 bodies (GFLOPS) | 164.3 | 177.9 | +8.3% |
+| Board power avg / peak (mW) | 4304 / 7639 | 4653 / 8683 | +8% / +14% |
+
+Performance scales with clock speed (CPU +5.2%, GPU +8.3%), and there is no throttling at 40–48 °C.
+
 Run `sudo jetson_clocks` / MAXN for sustained max clocks. Use a 5V/4A barrel supply and active cooling.
 Overclocking is at your own risk.
