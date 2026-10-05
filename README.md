@@ -53,7 +53,7 @@ Expected gains:
 | nbody 32768 bodies (GFLOPS) | 164.3 | 177.9 | +8.3% |
 | Board power avg / peak (mW) | 4304 / 7639 | 4653 / 8683 | +8% / +14% |
 
-Performance scales with clock speed (CPU +5.2%, GPU +8.3%), and there is no throttling at 40–48 °C.
+Performance scales with clock speed (CPU +5.2%, GPU +8.3%), and there is no throttling.
 
 Run `sudo jetson_clocks` / MAXN for sustained max clocks. Use a 5V/4A barrel supply and active cooling.
 Overclocking is at your own risk.
